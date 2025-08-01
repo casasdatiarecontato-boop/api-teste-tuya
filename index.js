@@ -108,10 +108,16 @@ function httpsRequest(options, body) {
 async function getAccessToken() {
   const t = Date.now().toString();
   const signStr = CLIENT_ID + t;
+
+  // DEBUG
+  console.log('🧩 [DEBUG] String to sign (getAccessToken):');
+  console.log(signStr);
+
   const sign = crypto.createHmac('sha256', CLIENT_SECRET)
     .update(signStr)
     .digest('hex')
     .toUpperCase();
+
   const path = '/v1.0/token?grant_type=1';
   const options = {
     hostname: API_HOST,
@@ -124,6 +130,7 @@ async function getAccessToken() {
       'sign_method': 'HMAC-SHA256'
     }
   };
+
   const result = await httpsRequest(options);
   if (!result || result.success === false) {
     throw new Error(`Failed to obtain access token: ${JSON.stringify(result)}`);
@@ -151,8 +158,9 @@ function buildSignature(method, fullPath, body, accessToken) {
 
   const content = CLIENT_ID + accessToken + t + method.toUpperCase() + '\n' + bodyHash + '\n\n' + fullPath;
 
-  // 🔐 DEBUG: mostra no terminal a string usada na assinatura
-  console.log('🔐 String to sign:', content);
+  // DEBUG
+  console.log('🧩 [DEBUG] String to sign (buildSignature):');
+  console.log(content);
 
   const sign = crypto.createHmac('sha256', CLIENT_SECRET)
     .update(content)
