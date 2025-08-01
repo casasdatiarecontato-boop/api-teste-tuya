@@ -1,0 +1,21 @@
+{
+  "name": "tuya-backend",
+  "version": "1.0.0",
+  "description": "Backend service for Tia Rê Conecta integration with Tuya door lock API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "keywords": [
+    "tuya",
+    "door-lock",
+    "backend",
+    "tia-re-conecta"
+  ],
+  "author": "Tia Rê Imóveis",
+  "license": "MIT",
+  "dependencies": {}
+}
