@@ -108,15 +108,14 @@ function httpsRequest(options, body) {
 async function getAccessToken() {
   const t = Date.now().toString();
   const signStr = CLIENT_ID + t;
-
-  // DEBUG
-  console.log('🧩 [DEBUG] String to sign (getAccessToken):');
-  console.log(signStr);
-
   const sign = crypto.createHmac('sha256', CLIENT_SECRET)
     .update(signStr)
     .digest('hex')
     .toUpperCase();
+
+  // 🟡 DEBUG REAL DO getAccessToken
+  console.log('[DEBUG] String to sign (getAccessToken):', signStr);
+  console.log('[DEBUG] Signature result (getAccessToken):', sign);
 
   const path = '/v1.0/token?grant_type=1';
   const options = {
@@ -135,6 +134,7 @@ async function getAccessToken() {
   if (!result || result.success === false) {
     throw new Error(`Failed to obtain access token: ${JSON.stringify(result)}`);
   }
+
   return result.result.access_token;
 }
 
