@@ -110,7 +110,7 @@ async function getAccessToken() {
   const signStr = CLIENT_ID + t;
   const sign = crypto.createHmac('sha256', CLIENT_SECRET)
     .update(signStr)
-    .digest('hex')
+    .digest('base64')
     .toUpperCase();
 
   // 🟡 DEBUG REAL DO getAccessToken
