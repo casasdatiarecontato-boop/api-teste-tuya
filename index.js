@@ -148,11 +148,17 @@ function buildSignature(method, fullPath, body, accessToken) {
   const t = Date.now().toString();
   const bodyStr = body ? (typeof body === 'string' ? body : JSON.stringify(body)) : '';
   const bodyHash = crypto.createHash('sha256').update(bodyStr).digest('hex');
+
   const content = CLIENT_ID + accessToken + t + method.toUpperCase() + '\n' + bodyHash + '\n\n' + fullPath;
+
+  // 🔐 DEBUG: mostra no terminal a string usada na assinatura
+  console.log('🔐 String to sign:', content);
+
   const sign = crypto.createHmac('sha256', CLIENT_SECRET)
     .update(content)
     .digest('hex')
     .toUpperCase();
+
   return { sign, t };
 }
 
